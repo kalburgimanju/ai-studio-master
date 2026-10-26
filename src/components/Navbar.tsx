@@ -146,7 +146,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation, onNavigateLa
                 href="#products" 
                 className="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-slate-800/50 transition-colors"
               >
-                Products & Cases
+                Products
+              </a>
+              <a 
+                href="#animated-showcase" 
+                className="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-slate-800/50 transition-colors inline-flex items-center gap-1"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+                <span>AI Gallery</span>
               </a>
               <a 
                 href="#industries" 
@@ -235,7 +242,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation, onNavigateLa
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="px-3 py-2.5 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium flex items-center justify-between"
               >
-                <span>Products & Case Studies (BharatTutor)</span>
+                <span>Products & Case Studies</span>
+                <ChevronRight className="w-4 h-4 text-slate-500" />
+              </a>
+              <a 
+                href="#animated-showcase" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-3 py-2.5 rounded-lg text-slate-200 hover:bg-slate-900 text-sm font-medium flex items-center justify-between"
+              >
+                <span className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-sky-400" />
+                  <span>Animated AI Gallery</span>
+                </span>
                 <ChevronRight className="w-4 h-4 text-slate-500" />
               </a>
               <a 

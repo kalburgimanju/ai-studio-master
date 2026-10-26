@@ -14,6 +14,7 @@ import {
   Play
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/content';
+import neuralAiCoreImg from '../assets/images/neural_ai_core_1793018526542.jpg';
 
 interface HeroProps {
   onOpenConsultation: () => void;
@@ -21,10 +22,11 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onExploreLab }) => {
-  const [activeTab, setActiveTab] = useState<'rag' | 'embeddings' | 'cluster'>('rag');
+  const [activeTab, setActiveTab] = useState<'core' | 'rag' | 'embeddings' | 'cluster'>('core');
   const [selectedPromptIndex, setSelectedPromptIndex] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
   const [simulatedTokens, setSimulatedTokens] = useState<string>('');
+  const [isPulsing, setIsPulsing] = useState(false);
 
   const samplePrompts = [
     {
@@ -160,41 +162,135 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation, onExploreLab }) 
               </div>
 
               {/* Console Tabs */}
-              <div className="grid grid-cols-3 bg-slate-900/40 border-b border-slate-800 text-xs font-medium">
+              <div className="grid grid-cols-4 bg-slate-900/40 border-b border-slate-800 text-xs font-medium">
+                <button
+                  onClick={() => setActiveTab('core')}
+                  className={`py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
+                    activeTab === 'core' 
+                      ? 'border-sky-400 text-sky-300 bg-slate-900/60 font-semibold' 
+                      : 'border-transparent text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+                  <span className="truncate">Neural Core</span>
+                </button>
                 <button
                   onClick={() => setActiveTab('rag')}
-                  className={`py-2.5 px-3 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
+                  className={`py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
                     activeTab === 'rag' 
                       ? 'border-sky-400 text-sky-300 bg-slate-900/60 font-semibold' 
                       : 'border-transparent text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   <Search className="w-3.5 h-3.5" />
-                  <span>Vector RAG</span>
+                  <span className="truncate">Vector RAG</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('embeddings')}
-                  className={`py-2.5 px-3 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
+                  className={`py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
                     activeTab === 'embeddings' 
                       ? 'border-indigo-400 text-indigo-300 bg-slate-900/60 font-semibold' 
                       : 'border-transparent text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   <Layers className="w-3.5 h-3.5" />
-                  <span>Embeddings</span>
+                  <span className="truncate">Embeddings</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('cluster')}
-                  className={`py-2.5 px-3 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
+                  className={`py-2.5 px-2 text-center transition-colors cursor-pointer border-b-2 flex items-center justify-center gap-1.5 ${
                     activeTab === 'cluster' 
                       ? 'border-amber-400 text-amber-300 bg-slate-900/60 font-semibold' 
                       : 'border-transparent text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   <Cpu className="w-3.5 h-3.5" />
-                  <span>Sovereign GPU</span>
+                  <span className="truncate">GPU Cluster</span>
                 </button>
               </div>
+
+              {/* Tab Content: Animated Neural Core Hologram */}
+              {activeTab === 'core' && (
+                <div className="p-4 space-y-3">
+                  <div className="relative rounded-xl overflow-hidden border border-sky-500/30 group bg-slate-950 aspect-video flex items-center justify-center">
+                    {/* Animated Image Asset */}
+                    <img
+                      src={neuralAiCoreImg}
+                      alt="India Innovation Tech Neural Core"
+                      className={`w-full h-full object-cover transition-transform duration-700 ${
+                        isPulsing ? 'scale-110 brightness-125' : 'group-hover:scale-105'
+                      }`}
+                    />
+
+                    {/* Animated Laser Scanline Effect */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                      <div className="w-full h-1 bg-gradient-to-r from-transparent via-sky-400 to-transparent shadow-[0_0_15px_#38bdf8] animate-scanline" />
+                    </div>
+
+                    {/* Ambient Radial Vignette & Grid */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
+
+                    {/* Top HUD Badges */}
+                    <div className="absolute top-3 left-3 flex items-center gap-2">
+                      <div className="px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-sky-500/40 text-[10px] font-mono text-sky-300 flex items-center gap-1.5 shadow-md">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                        <span>NEURAL CORE ACTIVE</span>
+                      </div>
+                      <div className="px-2 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-slate-700 text-[10px] font-mono text-slate-300">
+                        1536-D
+                      </div>
+                    </div>
+
+                    {/* Animated Pulsing Ring Center Highlight */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="w-24 h-24 rounded-full border border-sky-400/40 animate-pulse-glow" />
+                    </div>
+
+                    {/* Bottom HUD Bar */}
+                    <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-[11px] font-mono">
+                      <div className="px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-slate-700/80 text-slate-300">
+                        Latent Weights: <span className="text-emerald-400 font-bold">FP8 AWQ</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setIsPulsing(true);
+                          setTimeout(() => setIsPulsing(false), 900);
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-sky-500/90 hover:bg-sky-400 text-slate-950 font-bold flex items-center gap-1 shadow-lg shadow-sky-500/30 cursor-pointer active:scale-95 transition-all"
+                      >
+                        <Zap className="w-3 h-3 fill-slate-950" />
+                        <span>Pulse Core</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Telemetry quick bar */}
+                  <div className="grid grid-cols-3 gap-2 text-center font-mono text-[11px]">
+                    <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+                      <div className="text-[10px] text-slate-400">Tokens/Sec</div>
+                      <div className="font-extrabold text-sky-400">128 tok/s</div>
+                    </div>
+                    <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+                      <div className="text-[10px] text-slate-400">Cluster Uptime</div>
+                      <div className="font-extrabold text-emerald-400">99.98%</div>
+                    </div>
+                    <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800">
+                      <div className="text-[10px] text-slate-400">Data Leakage</div>
+                      <div className="font-extrabold text-amber-400">0.00%</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <span className="text-[11px] text-slate-400">Want to test semantic search?</span>
+                    <button
+                      onClick={() => setActiveTab('rag')}
+                      className="text-xs text-sky-400 hover:text-sky-300 font-semibold underline cursor-pointer inline-flex items-center gap-1"
+                    >
+                      Run Vector RAG Demo →
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Tab Content: Vector RAG Simulator */}
               {activeTab === 'rag' && (

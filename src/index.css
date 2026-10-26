@@ -67,3 +67,82 @@
   background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 24px 24px;
 }
+
+/* Animated image effects */
+@keyframes scanline {
+  0% {
+    top: -10%;
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.9;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+  }
+}
+
+.animate-scanline {
+  animation: scanline 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+@keyframes radarSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-spin {
+  animation: radarSpin 20s linear infinite;
+}
+
+@keyframes pulseGlowRing {
+  0%, 100% {
+    transform: scale(0.98);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlowRing 3.5s ease-in-out infinite;
+}
+
+@keyframes holographicShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.15), transparent);
+  background-size: 200% 100%;
+  animation: holographicShimmer 3s infinite;
+}
+

@@ -15,6 +15,9 @@ import {
   Languages
 } from 'lucide-react';
 import { FLAGSHIP_PRODUCTS } from '../data/content';
+import bharatTutorImg from '../assets/images/bharat_tutor_ai_1793018548551.jpg';
+import vectorMeshImg from '../assets/images/vector_mesh_rag_1793018580180.jpg';
+import agentSwarmImg from '../assets/images/agent_swarm_orbit_1793018564612.jpg';
 
 interface ProductsProps {
   onOpenConsultation: () => void;
@@ -22,6 +25,7 @@ interface ProductsProps {
 
 export const ProductsAndCaseStudies: React.FC<ProductsProps> = ({ onOpenConsultation }) => {
   const [selectedProduct, setSelectedProduct] = useState(FLAGSHIP_PRODUCTS[0]);
+  const [productViewMode, setProductViewMode] = useState<'visual' | 'simulator'>('visual');
   
   // Interactive BharatTutor Live State
   const [tutorLanguage, setTutorLanguage] = useState<'hinglish' | 'english' | 'regional'>('hinglish');
@@ -177,132 +181,209 @@ export const ProductsAndCaseStudies: React.FC<ProductsProps> = ({ onOpenConsulta
               <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="font-mono text-slate-300 font-semibold">
-                    {selectedProduct.id === 'bharat-tutor-live' ? 'BharatTutor Live Interactive Classroom' : 'Enterprise Live Pipeline'}
+                  <span className="font-mono text-slate-300 font-semibold truncate">
+                    {selectedProduct.name}
                   </span>
                 </div>
-                <span className="text-[10px] font-mono text-sky-400 px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/20">
-                  280ms P99 LATENCY
-                </span>
+                <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800 shrink-0">
+                  <button
+                    onClick={() => setProductViewMode('visual')}
+                    className={`px-2.5 py-1 rounded text-[11px] font-semibold cursor-pointer transition-colors ${
+                      productViewMode === 'visual' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Animated Visual
+                  </button>
+                  <button
+                    onClick={() => setProductViewMode('simulator')}
+                    className={`px-2.5 py-1 rounded text-[11px] font-semibold cursor-pointer transition-colors ${
+                      productViewMode === 'simulator' ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Live Simulator
+                  </button>
+                </div>
               </div>
 
-              {selectedProduct.id === 'bharat-tutor-live' ? (
-                <div className="py-4 space-y-4">
-                  {/* Classroom Controls */}
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs">
-                      {(['math', 'physics', 'code'] as const).map(subj => (
-                        <button
-                          key={subj}
-                          onClick={() => {
-                            setTutorSubject(subj);
-                            setCurrentStepIndex(0);
-                          }}
-                          className={`px-3 py-1 rounded text-xs capitalize cursor-pointer font-medium ${
-                            tutorSubject === subj ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          {subj}
-                        </button>
-                      ))}
+              {/* View Mode 1: Animated Visual Hologram */}
+              {productViewMode === 'visual' ? (
+                <div className="py-4 space-y-3">
+                  <div className="relative rounded-xl overflow-hidden border border-sky-500/30 group bg-slate-950 aspect-video flex items-center justify-center">
+                    <img
+                      src={
+                        selectedProduct.id === 'bharat-tutor-live'
+                          ? bharatTutorImg
+                          : selectedProduct.id === 'fincognition-rag'
+                            ? vectorMeshImg
+                            : agentSwarmImg
+                      }
+                      alt={selectedProduct.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+
+                    {/* Animated Laser Scanline Effect */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                      <div className="w-full h-1 bg-gradient-to-r from-transparent via-sky-400 to-transparent shadow-[0_0_15px_#38bdf8] animate-scanline" />
                     </div>
 
-                    <div className="flex gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs">
-                      {(['hinglish', 'english'] as const).map(lang => (
-                        <button
-                          key={lang}
-                          onClick={() => setTutorLanguage(lang)}
-                          className={`px-2.5 py-1 rounded text-xs capitalize cursor-pointer font-medium ${
-                            tutorLanguage === lang ? 'bg-indigo-500 text-white font-bold' : 'text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          {lang}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                    {/* Radial Vignette */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
 
-                  {/* Student Question Prompt */}
-                  <div className="p-3 bg-slate-900/70 rounded-xl border border-slate-800">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
-                      Student Query:
-                    </span>
-                    <p className="text-xs font-semibold text-white">
-                      "{currentSession.question}"
-                    </p>
-                  </div>
-
-                  {/* AI Whiteboard / Blackboard */}
-                  <div className="bg-slate-900/90 rounded-xl border border-slate-800 p-4 font-mono text-xs space-y-2 min-h-[160px]">
-                    <div className="flex items-center justify-between text-[11px] text-emerald-400 pb-2 border-b border-slate-800">
-                      <span>Live Step-by-Step Chalkboard</span>
-                      <span>Progress: {currentStepIndex + 1}/{currentSession.steps.length}</span>
-                    </div>
-
-                    <div className="space-y-1.5 pt-2">
-                      {currentSession.steps.slice(0, currentStepIndex + 1).map((step, idx) => (
-                        <div key={idx} className="text-slate-200 animate-in fade-in duration-200 flex items-start gap-2">
-                          <span className="text-sky-400">▶</span>
-                          <span>{step}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {currentStepIndex < currentSession.steps.length - 1 && (
-                      <button
-                        onClick={() => setCurrentStepIndex(prev => prev + 1)}
-                        className="mt-3 text-[11px] text-sky-400 hover:text-sky-300 font-sans font-semibold underline cursor-pointer"
-                      >
-                        + Reveal Next Step Explanation
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Interactive Voice Synthesis Player */}
-                  <div className="p-3.5 bg-gradient-to-r from-sky-950/40 to-indigo-950/40 rounded-xl border border-sky-500/20 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={handleToggleAudio}
-                        className={`w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-all ${
-                          isAudioPlaying ? 'bg-emerald-400 text-slate-950' : 'bg-sky-500 text-slate-950 hover:bg-sky-400'
-                        }`}
-                      >
-                        {isAudioPlaying ? <Volume2 className="w-5 h-5 animate-bounce" /> : <Play className="w-4 h-4 fill-slate-950 ml-0.5" />}
-                      </button>
-                      <div>
-                        <div className="text-xs font-bold text-white flex items-center gap-1.5">
-                          <span>BharatTutor Neural Audio Stream</span>
-                          {isAudioPlaying && <span className="text-[10px] text-emerald-400 font-mono">(Playing)</span>}
-                        </div>
-                        <div className="text-[11px] text-slate-400 line-clamp-1 max-w-xs">
-                          {currentSession.audioTranscript}
-                        </div>
+                    {/* Floating HUD Badges */}
+                    <div className="absolute top-3 left-3 flex items-center gap-2">
+                      <div className="px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-sky-500/40 text-[10px] font-mono text-sky-300 flex items-center gap-1.5 shadow-md">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                        <span>{selectedProduct.badge}</span>
                       </div>
+                    </div>
+
+                    <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-[11px] font-mono">
+                      <div className="px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-slate-700 text-slate-300">
+                        {selectedProduct.id === 'bharat-tutor-live' && 'Duplex Voice < 280ms'}
+                        {selectedProduct.id === 'fincognition-rag' && 'Vector RAG 1536-D'}
+                        {selectedProduct.id === 'agentpulse-core' && 'Hierarchical Agent Swarm'}
+                      </div>
+                      <button
+                        onClick={() => setProductViewMode('simulator')}
+                        className="px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold flex items-center gap-1 shadow-md cursor-pointer"
+                      >
+                        <span>Test Simulator →</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Micro metric bar */}
+                  <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                    <div className="p-2.5 bg-slate-900/80 rounded-lg border border-slate-800 flex justify-between items-center">
+                      <span className="text-slate-400">Architecture:</span>
+                      <span className="text-sky-300 font-semibold">{selectedProduct.badge}</span>
+                    </div>
+                    <div className="p-2.5 bg-slate-900/80 rounded-lg border border-slate-800 flex justify-between items-center">
+                      <span className="text-slate-400">Status:</span>
+                      <span className="text-emerald-400 font-semibold">Active Production</span>
                     </div>
                   </div>
                 </div>
               ) : (
-                /* Alternate preview for FinCognition or AgentPulse */
-                <div className="py-6 space-y-4 font-mono text-xs">
-                  <div className="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
-                    <div className="flex justify-between text-slate-400">
-                      <span>Target File:</span>
-                      <span className="text-slate-200">FY26_Audited_Annual_Report_Full.pdf</span>
-                    </div>
-                    <div className="flex justify-between text-slate-400">
-                      <span>Total Pages Parsed:</span>
-                      <span className="text-sky-400 font-semibold">1,248 Pages in 2.4 sec</span>
-                    </div>
-                    <div className="flex justify-between text-slate-400">
-                      <span>SEBI / RBI Flagged Anomalies:</span>
-                      <span className="text-emerald-400 font-semibold">0 Critical Risks Found</span>
-                    </div>
-                  </div>
+                /* View Mode 2: Live Simulator */
+                selectedProduct.id === 'bharat-tutor-live' ? (
+                  <div className="py-4 space-y-4">
+                    {/* Classroom Controls */}
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs">
+                        {(['math', 'physics', 'code'] as const).map(subj => (
+                          <button
+                            key={subj}
+                            onClick={() => {
+                              setTutorSubject(subj);
+                              setCurrentStepIndex(0);
+                            }}
+                            className={`px-3 py-1 rounded text-xs capitalize cursor-pointer font-medium ${
+                              tutorSubject === subj ? 'bg-sky-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {subj}
+                          </button>
+                        ))}
+                      </div>
 
-                  <div className="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800 text-slate-300 text-xs">
-                    "All debt covenant thresholds checked against Schedule III guidelines. Zero discrepancies detected across consolidated subsidiary balance sheets."
+                      <div className="flex gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs">
+                        {(['hinglish', 'english'] as const).map(lang => (
+                          <button
+                            key={lang}
+                            onClick={() => setTutorLanguage(lang)}
+                            className={`px-2.5 py-1 rounded text-xs capitalize cursor-pointer font-medium ${
+                              tutorLanguage === lang ? 'bg-indigo-500 text-white font-bold' : 'text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {lang}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Student Question Prompt */}
+                    <div className="p-3 bg-slate-900/70 rounded-xl border border-slate-800">
+                      <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
+                        Student Query:
+                      </span>
+                      <p className="text-xs font-semibold text-white">
+                        "{currentSession.question}"
+                      </p>
+                    </div>
+
+                    {/* AI Whiteboard / Blackboard */}
+                    <div className="bg-slate-900/90 rounded-xl border border-slate-800 p-4 font-mono text-xs space-y-2 min-h-[160px]">
+                      <div className="flex items-center justify-between text-[11px] text-emerald-400 pb-2 border-b border-slate-800">
+                        <span>Live Step-by-Step Chalkboard</span>
+                        <span>Progress: {currentStepIndex + 1}/{currentSession.steps.length}</span>
+                      </div>
+
+                      <div className="space-y-1.5 pt-2">
+                        {currentSession.steps.slice(0, currentStepIndex + 1).map((step, idx) => (
+                          <div key={idx} className="text-slate-200 animate-in fade-in duration-200 flex items-start gap-2">
+                            <span className="text-sky-400">▶</span>
+                            <span>{step}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {currentStepIndex < currentSession.steps.length - 1 && (
+                        <button
+                          onClick={() => setCurrentStepIndex(prev => prev + 1)}
+                          className="mt-3 text-[11px] text-sky-400 hover:text-sky-300 font-sans font-semibold underline cursor-pointer"
+                        >
+                          + Reveal Next Step Explanation
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Interactive Voice Synthesis Player */}
+                    <div className="p-3.5 bg-gradient-to-r from-sky-950/40 to-indigo-950/40 rounded-xl border border-sky-500/20 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={handleToggleAudio}
+                          className={`w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-all ${
+                            isAudioPlaying ? 'bg-emerald-400 text-slate-950' : 'bg-sky-500 text-slate-950 hover:bg-sky-400'
+                          }`}
+                        >
+                          {isAudioPlaying ? <Volume2 className="w-5 h-5 animate-bounce" /> : <Play className="w-4 h-4 fill-slate-950 ml-0.5" />}
+                        </button>
+                        <div>
+                          <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                            <span>BharatTutor Neural Audio Stream</span>
+                            {isAudioPlaying && <span className="text-[10px] text-emerald-400 font-mono">(Playing)</span>}
+                          </div>
+                          <div className="text-[11px] text-slate-400 line-clamp-1 max-w-xs">
+                            {currentSession.audioTranscript}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  /* Alternate preview for FinCognition or AgentPulse */
+                  <div className="py-6 space-y-4 font-mono text-xs">
+                    <div className="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                      <div className="flex justify-between text-slate-400">
+                        <span>Target File:</span>
+                        <span className="text-slate-200">FY26_Audited_Annual_Report_Full.pdf</span>
+                      </div>
+                      <div className="flex justify-between text-slate-400">
+                        <span>Total Pages Parsed:</span>
+                        <span className="text-sky-400 font-semibold">1,248 Pages in 2.4 sec</span>
+                      </div>
+                      <div className="flex justify-between text-slate-400">
+                        <span>SEBI / RBI Flagged Anomalies:</span>
+                        <span className="text-emerald-400 font-semibold">0 Critical Risks Found</span>
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 bg-slate-900/60 rounded-xl border border-slate-800 text-slate-300 text-xs">
+                      "All debt covenant thresholds checked against Schedule III guidelines. Zero discrepancies detected across consolidated subsidiary balance sheets."
+                    </div>
+                  </div>
+                )
               )}
             </div>
 

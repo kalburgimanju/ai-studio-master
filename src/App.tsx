@@ -9,6 +9,7 @@ import { Hero } from './components/Hero';
 import { ServicesSection } from './components/ServicesSection';
 import { InteractiveAILab } from './components/InteractiveAILab';
 import { ProductsAndCaseStudies } from './components/ProductsAndCaseStudies';
+import { AnimatedShowcase } from './components/AnimatedShowcase';
 import { IndustriesSection } from './components/IndustriesSection';
 import { TechStackSection } from './components/TechStackSection';
 import { AboutSection } from './components/AboutSection';
@@ -62,6 +63,11 @@ export default function App() {
         {/* Proprietary Platforms & Case Studies (Featuring BharatTutor Live / AI Tutor Live) */}
         <ProductsAndCaseStudies
           onOpenConsultation={() => handleOpenConsultation('bharat-tutor-live')}
+        />
+
+        {/* Animated Deep-Tech AI Architecture Gallery */}
+        <AnimatedShowcase
+          onOpenConsultation={(service) => handleOpenConsultation(service)}
         />
 
         {/* Vertical Industry Solutions */}
